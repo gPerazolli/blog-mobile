@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import { useRoute } from '@react-navigation/native';
+import { getPostById } from '../services/postService';
+
 
 const API_URL = 'http://192.168.15.13:3000/posts'; 
 
@@ -21,7 +23,7 @@ const PostDetailScreen = () => {
 
     const fetchPostDetails = async () => {
       try {
-        const response = await axios.get(`${API_URL}/${postId}`);
+        const response = await getPostById(postId);
         setPost(response.data);
       } catch (error) {
         console.error('Erro ao buscar os detalhes do post:', error);

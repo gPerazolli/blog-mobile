@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getPostById } from '../services/postService';
 
 const API_URL = 'http://192.168.15.13:3000/posts'; 
 
@@ -23,7 +24,7 @@ const EditPostScreen = () => {
       } else {
         setToken(storedToken);
         try {
-          const response = await axios.get(`${API_URL}/${postId}`);
+          const response = await getPostById(postId);
           const { title, content, author } = response.data;
           setTitle(title);
           setContent(content);

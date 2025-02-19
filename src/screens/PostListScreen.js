@@ -3,6 +3,7 @@ import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity }
 import axios from 'axios';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { deletePost } from '../services/postService';
 
 const API_URL = 'http://192.168.15.13:3000/posts'; 
 
@@ -49,6 +50,7 @@ const PostListScreen = () => {
       setIsAuthenticated(false); 
       Alert.alert('Sucesso', 'Logout realizado com sucesso!');
     } catch (error) {
+      console.error('Erro ao deslogar:', error);
     }
   };
 
@@ -64,10 +66,11 @@ const PostListScreen = () => {
         return;
       }
   
-      await axios.delete(`${API_URL}/${postId}`, {
+      await deletePost(postId), {
         headers: { Authorization: `Bearer ${token}` },
-      });
+      };
   
+
       setPosts(posts.filter((post) => post.id !== postId));
       Alert.alert('Sucesso', 'Post excluído com sucesso!');
     } catch (error) {
